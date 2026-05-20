@@ -1,0 +1,35 @@
+name: Daily Synthetic Data Pipeline
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  synthesize-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Run Synthetic Ingestion
+        run: |
+          echo "Simulating data ingestion..."
+          echo "date,status" > data.csv
+          echo "date,success" >> data.csv
+          
+      - name: Commit Automated Data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data.csv
+          git commit -m "chore: automated daily synthetic data ingestion" || echo "No changes to commit"
+          git push
