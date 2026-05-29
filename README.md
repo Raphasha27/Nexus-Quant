@@ -13,10 +13,11 @@ Nexus-Quant is a quantitative trading and market analytics engine built with Fas
 
 ## Features
 
-- **Market Data Ingestion** — Real-time and historical price data processing
-- **Technical Analysis** — SMA, EMA, RSI, MACD, Bollinger Bands indicators
-- **Backtesting Engine** — Strategy performance simulation against historical data
-- **Portfolio Analytics** — Risk metrics, Sharpe ratio, drawdown analysis
+- **Trading Signal Generation** — Momentum-based signal engine with SMA crossover + RSI confirmation
+- **Anomaly Detection** — Volume-based anomaly scoring with z-score statistical analysis
+- **Portfolio Optimization** — Mean-variance optimization with allocation and risk metrics
+- **Market Data** — Synthetic OHLCV data generation for backtesting and simulation
+- **Market Sentiment** — Real-time sentiment analysis with sector performance tracking
 - **REST API** — Comprehensive API with automatic OpenAPI documentation
 
 ## Quick Start
@@ -26,7 +27,7 @@ git clone https://github.com/Raphasha27/Nexus-Quant.git
 cd Nexus-Quant
 cp .env.example .env
 pip install -r requirements.txt
-uvicorn app:app --reload --port 8000
+uvicorn api.main:app --reload --port 8000
 ```
 
 Or with Docker:
@@ -40,19 +41,24 @@ docker run -p 8000:8000 nexus-quant
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/` | API status |
+| GET | `/` | API status and available modes |
 | GET | `/health` | System health check |
+| POST | `/api/v1/signal` | Generate trading signal for a ticker |
+| POST | `/api/v1/anomaly` | Detect volume anomalies |
+| GET | `/api/v1/ohlcv/{ticker}` | Get OHLCV market data |
+| POST | `/api/v1/portfolio/optimize` | Run portfolio optimization |
+| GET | `/api/v1/market/summary` | Market sentiment and sector performance |
 | GET | `/docs` | Swagger documentation |
 
 ## Project Structure
 
 ```
 Nexus-Quant/
-├── app.py              # FastAPI application entry point
-├── api/                # Route handlers
-├── requirements.txt    # Dependencies
-├── Dockerfile          # Container build
-└── .env.example        # Environment template
+├── api/
+│   └── main.py          # FastAPI application with quant engine
+├── requirements.txt     # Dependencies
+├── Dockerfile           # Container build
+└── .env.example         # Environment template
 ```
 
 ## License
