@@ -5,20 +5,21 @@
   [![FastAPI](https://img.shields.io/badge/FastAPI-005571?logo=fastapi&logoColor=white&style=for-the-badge)](https://fastapi.tiangolo.com)
   [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white&style=for-the-badge)](https://docker.com)
   [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+  [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-261230?style=for-the-badge)](https://github.com/astral-sh/ruff)
 </div>
 
 ## Overview
 
-Nexus-Quant is a quantitative trading and market analytics engine built with FastAPI. It provides real-time market data processing, technical analysis indicators, portfolio risk assessment, and backtesting capabilities through a clean REST API.
+Nexus-Quant is a quantitative trading and market analytics engine built with FastAPI. It provides real-time market data processing, technical analysis indicators, portfolio risk assessment, and backtesting capabilities through a clean REST API. All data is synthetically generated for simulation and prototyping.
 
 ## Features
 
 - **Trading Signal Generation** — Momentum-based signal engine with SMA crossover + RSI confirmation
 - **Anomaly Detection** — Volume-based anomaly scoring with z-score statistical analysis
-- **Portfolio Optimization** — Mean-variance optimization with allocation and risk metrics
+- **Portfolio Optimization** — Mean-variance optimization with allocation and risk metrics (Sharpe ratio, max drawdown)
 - **Market Data** — Synthetic OHLCV data generation for backtesting and simulation
 - **Market Sentiment** — Real-time sentiment analysis with sector performance tracking
-- **REST API** — Comprehensive API with automatic OpenAPI documentation
+- **REST API** — Comprehensive API with automatic OpenAPI documentation at `/docs`
 
 ## Quick Start
 
@@ -39,26 +40,84 @@ docker run -p 8000:8000 nexus-quant
 
 ## API Endpoints
 
+### System
+
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/` | API status and available modes |
 | GET | `/health` | System health check |
+
+### Trading Signals
+
+| Method | Path | Description |
+|--------|------|-------------|
 | POST | `/api/v1/signal` | Generate trading signal for a ticker |
+
+**POST `/api/v1/signal`**
+
+```json
+{
+  "ticker": "NQ-SYNTH",
+  "strategy": "momentum",
+  "risk_tolerance": 0.5
+}
+```
+
+Response:
+```json
+{
+  "ticker": "NQ-SYNTH",
+  "signal": "BUY",
+  "confidence": 0.873,
+  "indicators": { "sma_5": 152.34, "sma_20": 148.12, "rsi": 62.45 }
+}
+```
+
+### Anomaly Detection
+
+| Method | Path | Description |
+|--------|------|-------------|
 | POST | `/api/v1/anomaly` | Detect volume anomalies |
+
+### Market Data
+
+| Method | Path | Description |
+|--------|------|-------------|
 | GET | `/api/v1/ohlcv/{ticker}` | Get OHLCV market data |
+
+### Portfolio Management
+
+| Method | Path | Description |
+|--------|------|-------------|
 | POST | `/api/v1/portfolio/optimize` | Run portfolio optimization |
+
+### Market Intelligence
+
+| Method | Path | Description |
+|--------|------|-------------|
 | GET | `/api/v1/market/summary` | Market sentiment and sector performance |
-| GET | `/docs` | Swagger documentation |
 
 ## Project Structure
 
 ```
 Nexus-Quant/
 ├── api/
-│   └── main.py          # FastAPI application with quant engine
-├── requirements.txt     # Dependencies
-├── Dockerfile           # Container build
-└── .env.example         # Environment template
+│   └── main.py           # FastAPI application with quant engine
+├── tests/                # Unit tests
+├── Dockerfile            # Container build
+├── .dockerignore         # Docker build exclusions
+├── requirements.txt      # Python dependencies
+├── pyproject.toml        # Project metadata and build config
+└── .pre-commit-config.yaml
+```
+
+## Development
+
+```bash
+pip install -e ".[dev]"
+pytest
+ruff check api/
+ruff format api/ --check
 ```
 
 ## License
@@ -67,19 +126,13 @@ MIT License. See [LICENSE](LICENSE) for details.
 
 ---
 
-## 🔗 Ecosystem
+## Ecosystem
 
 Part of the **Kirov Dynamics Technology** ecosystem:
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-⭐29-00ffcc?style=flat-square)](https://github.com/Raphasha27/Portfolio)
 [![AI-Agent](https://img.shields.io/badge/AI--Agent-⭐3-004a99?style=flat-square)](https://github.com/Raphasha27/AI-Agent)
-[![Github-Harden](https://img.shields.io/badge/Github--Harden-Security-00ffcc?style=flat-square)](https://github.com/Raphasha27/Github-Harden)
-[![Go-RAG-System](https://img.shields.io/badge/Go--RAG--System-00ADD8?style=flat-square)](https://github.com/Raphasha27/Go-RAG-System)
 [![Nexus-Quant](https://img.shields.io/badge/Nexus--Quant-Quant-00ffcc?style=flat-square)](https://github.com/Raphasha27/Nexus-Quant)
-[![CyberShield SOC](https://img.shields.io/badge/CyberShield--SOC-Security-004a99?style=flat-square)](https://github.com/Raphasha27/cybershield_soc)
-[![Dev Factory](https://img.shields.io/badge/Dev--Factory-v7-005571?style=flat-square)](https://github.com/Raphasha27/autonomous-dev-factory-v7)
-[![SaaS Backend](https://img.shields.io/badge/SaaS--Backend-Multi--tenant-004a99?style=flat-square)](https://github.com/Raphasha27/saas-multitenant-backend)
-[![FastAPI Starter](https://img.shields.io/badge/FastAPI--Starter-Enterprise-005571?style=flat-square)](https://github.com/Raphasha27/enterprise-fastapi-starter)
 [![Repo Audit](https://img.shields.io/badge/Repo--Audit--Bot-CLI-00ffcc?style=flat-square)](https://github.com/Raphasha27/repo-audit-bot)
 
 *Building the infrastructure of autonomous systems.*
