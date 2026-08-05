@@ -23,6 +23,6 @@ keywords = ["quantitative-trading", "market-analytics", "fastapi", "portfolio-op
 dev = [
     "pytest>=9.1.1",
     "httpx>=0.28.1",
-    "ruff>=0.16.0",
+    "ruff>=0.16.1",
     "pre-commit>=4.6.1",
 ]
