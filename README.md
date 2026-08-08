@@ -1,4 +1,12 @@
 <div align="center">
+  <a href="https://raphasha27.github.io/Nexus-Quant/">
+    <img src="https://img.shields.io/badge/LIVE_DEPLOYMENT-View_App-0EA5E9?style=for-the-badge&logo=github&logoColor=white" alt="Live Deployment" />
+  </a>
+</div>
+
+<br/>
+
+<div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00ffcc,100:004a99&height=200&section=header&text=Nexus-Quant&fontSize=50&fontColor=ffffff&fontAlignY=40&desc=Quantitative%20Trading%20%26%20Market%20Analytics%20Engine&descAlignY=65" width="100%"/>
 
   [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white&style=for-the-badge)](https://python.org)
