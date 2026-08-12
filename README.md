@@ -1,3 +1,6 @@
+
+> **Live Now:** [https://nexus-quant-smoky.vercel.app](https://nexus-quant-smoky.vercel.app)
+> Run it instantly — no setup needed. Free-tier hosted build by Kirov Dynamics.
 <div align="center">
   <a href="https://raphasha27.github.io/Nexus-Quant/">
     <img src="https://img.shields.io/badge/LIVE_DEPLOYMENT-View_App-0EA5E9?style=for-the-badge&logo=github&logoColor=white" alt="Live Deployment" />
@@ -165,6 +168,7 @@ Part of the **Kirov Dynamics Technology** ecosystem:
 
 © 2026 **Kirov Dynamics Technology** | Built by **Koketso Raphasha (Raphasha27)**
 
+<<<<<<< Updated upstream
 ## Contributors
 
 Built and maintained by the **Kirov Dynamics** team:
@@ -175,3 +179,5 @@ Built and maintained by the **Kirov Dynamics** team:
 - [LindiweMotaung](https://github.com/LindiweMotaung) — Collaborator
 
 We build together — credit goes to the whole team, not one person.
+=======
+>>>>>>> Stashed changes
