@@ -1,19 +1,19 @@
 ---
 name: Feature Request
 about: Suggest an idea for this project
-title: "[FEATURE] "
+title: '[FEATURE] '
 labels: enhancement
-assignees: Raphasha27
+assignees: ''
 ---
 
-**Problem**
-A clear description of the problem you're trying to solve.
+**Is your feature request related to a problem?**
+A clear and concise description of what the problem is.
 
-**Solution**
-What you would like to happen.
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
 
-**Alternatives**
-Any alternative solutions you've considered.
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
 
-**Additional Context**
-Add any other context or screenshots.
+**Additional context**
+Add any other context or screenshots about the feature request here.
