@@ -16,7 +16,9 @@ class TestSignalRequest:
         assert req.risk_tolerance == 0.5
 
     def test_custom_values(self):
-        req = SignalRequest(ticker="AAPL", strategy="mean_reversion", risk_tolerance=0.8)
+        req = SignalRequest(
+            ticker="AAPL", strategy="mean_reversion", risk_tolerance=0.8
+        )
         assert req.ticker == "AAPL"
         assert req.strategy == "mean_reversion"
         assert req.risk_tolerance == 0.8

@@ -147,9 +147,9 @@ class TestBacktesting:
 
 class TestPortfolioOptimization:
     def _optimize(self, tickers, capital=100000.0):
-        resp = client.post("/api/v1/portfolio/optimize", json={
-            "tickers": tickers, "capital": capital
-        })
+        resp = client.post(
+            "/api/v1/portfolio/optimize", json={"tickers": tickers, "capital": capital}
+        )
         return resp.json()
 
     def test_optimization_returns_allocations(self):

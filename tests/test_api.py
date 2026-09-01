@@ -25,7 +25,9 @@ def test_health():
 
 
 def test_generate_signal():
-    resp = client.post("/api/v1/signal", json={"ticker": "TEST", "strategy": "momentum"})
+    resp = client.post(
+        "/api/v1/signal", json={"ticker": "TEST", "strategy": "momentum"}
+    )
     assert resp.status_code == 200
     data = resp.json()
     assert data["ticker"] == "TEST"
@@ -50,10 +52,10 @@ def test_get_ohlcv():
 
 
 def test_portfolio_optimize():
-    resp = client.post("/api/v1/portfolio/optimize", json={
-        "tickers": ["A", "B", "C"],
-        "capital": 100000.0
-    })
+    resp = client.post(
+        "/api/v1/portfolio/optimize",
+        json={"tickers": ["A", "B", "C"], "capital": 100000.0},
+    )
     assert resp.status_code == 200
     data = resp.json()
     assert data["strategy"] == "mean_variance_optimization"
