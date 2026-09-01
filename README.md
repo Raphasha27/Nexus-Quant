@@ -1,11 +1,14 @@
-[![CI](https://github.com/Raphasha27/Nexus-Quant/actions/workflows/ci.yml/badge.svg)](https://github.com/Raphasha27/Nexus-Quant/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<div align="center">
 
 # Nexus Quant
 
-### Quantitative Trading Analytics & Signal Generation Engine
+**Quantitative Trading Analytics & Signal Generation Engine with ML-Powered Anomaly Detection**
 
-<div align="center">
+[![CI](https://github.com/Raphasha27/Nexus-Quant/actions/workflows/ci.yml/badge.svg)](https://github.com/Raphasha27/Nexus-Quant/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code Quality](https://img.shields.io/badge/code%20quality-ruff-4B2E83)](https://docs.astral.sh/ruff/)
+[![Test Coverage](https://img.shields.io/badge/test%20coverage-91%25-brightgreen)](https://github.com/Raphasha27/Nexus-Quant)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://github.com/Raphasha27/Nexus-Quant)
 
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)
 
@@ -13,27 +16,42 @@
 
 ---
 
-## Overview
+## Features
 
-Nexus Quant is a **quantitative trading analytics and signal generation engine** built with FastAPI. It provides real-time market data processing, 15+ technical indicators, ML-powered anomaly detection, portfolio optimisation, and a backtesting framework through a clean REST API. All data is synthetically generated for simulation and prototyping.
-
-> Built for quantitative research — not financial advice.
+- **15+ Technical Indicators** — SMA, EMA, RSI, MACD, Bollinger Bands, and more
+- **ML Anomaly Detection** — Volume-based z-score statistical analysis
+- **Trading Signal Generation** — Momentum-based engine with multi-indicator confirmation
+- **Portfolio Optimisation** — Mean-variance optimization with Sharpe ratio & max drawdown
+- **Backtesting Framework** — Synthetic OHLCV data generation for strategy validation
+- **Market Sentiment** — Real-time sentiment analysis with sector performance tracking
+- **REST API** — Comprehensive API with automatic OpenAPI documentation at `/docs`
 
 ---
 
-## Features
+## Quick Start
 
-- [x] 15+ Technical Indicators — SMA, EMA, RSI, MACD, Bollinger Bands, and more
-- [x] ML Anomaly Detection — Volume-based z-score statistical analysis
-- [x] Trading Signal Generation — Momentum-based engine with multi-indicator confirmation
-- [x] Portfolio Optimisation — Mean-variance optimization with Sharpe ratio & max drawdown
-- [x] Backtesting Framework — Synthetic OHLCV data generation for strategy validation
-- [x] Market Sentiment — Real-time sentiment analysis with sector performance tracking
-- [x] REST API — Comprehensive API with automatic OpenAPI documentation at `/docs`
+```bash
+git clone https://github.com/Raphasha27/Nexus-Quant.git
+cd Nexus-Quant
+cp .env.example .env
+pip install -r requirements.txt
+uvicorn api.main:app --reload --port 8000
+```
+
+API docs (Swagger UI): `http://localhost:8000/docs`
+
+### Docker
+
+```bash
+docker build -t nexus-quant .
+docker run -p 8000:8000 nexus-quant
+```
 
 ---
 
 ## Architecture
+
+> Full architecture documentation: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
 ```
 ┌─────────────────┐
@@ -64,30 +82,9 @@ Nexus Quant is a **quantitative trading analytics and signal generation engine**
 
 ---
 
-## Quick Start
+## API Documentation
 
-### Using pip + uvicorn
-
-```bash
-git clone https://github.com/Raphasha27/Nexus-Quant.git
-cd Nexus-Quant
-cp .env.example .env
-pip install -r requirements.txt
-uvicorn api.main:app --reload --port 8000
-```
-
-### Using Docker
-
-```bash
-docker build -t nexus-quant .
-docker run -p 8000:8000 nexus-quant
-```
-
-API docs available at `http://localhost:8000/docs`
-
----
-
-## API Endpoints
+> Full API reference: [docs/API.md](docs/API.md) · Swagger UI: `http://localhost:8000/docs`
 
 ### System
 
@@ -138,16 +135,16 @@ API docs available at `http://localhost:8000/docs`
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| Language | Python 3.11+ |
-| Framework | FastAPI |
-| Data Processing | pandas, numpy |
-| Machine Learning | scikit-learn |
-| Validation | Pydantic |
-| Testing | pytest |
-| Linting | ruff |
-| Container | Docker |
+| Component | Technology | Description |
+|-----------|------------|-------------|
+| Language | Python 3.11+ | Core runtime |
+| Framework | FastAPI | Async REST API |
+| Data Processing | pandas, numpy | Financial data manipulation |
+| Machine Learning | scikit-learn | Anomaly detection models |
+| Validation | Pydantic | Request/response schemas |
+| Testing | pytest | Unit and integration tests |
+| Linting | ruff | Fast Python linter |
+| Container | Docker | Single-container deployment |
 
 ---
 
@@ -158,7 +155,9 @@ Nexus-Quant/
 ├── api/
 │   └── main.py           # FastAPI application with quant engine
 ├── tests/                # Unit tests
-├── docs/                 # Documentation
+├── docs/
+│   ├── ARCHITECTURE.md
+│   └── API.md
 ├── index.html            # Static frontend
 ├── data.csv              # Sample market data
 ├── Dockerfile            # Container build
@@ -169,18 +168,48 @@ Nexus-Quant/
 ├── CONTRIBUTING.md
 ├── SECURITY.md
 ├── CODE_OF_CONDUCT.md
-└── LICENSE
+├── LICENSE
+└── README.md
 ```
 
 ---
 
-## Development
+## Testing
 
 ```bash
 pip install -e ".[dev]"
-pytest
+pytest --cov=api --cov-report=term-missing -v
 ruff check api/
 ruff format api/ --check
+```
+
+---
+
+## Deployment
+
+### Docker
+
+```bash
+docker build -t nexus-quant .
+docker run -d -p 8000:8000 --name nexus-quant nexus-quant
+docker logs nexus-quant     # View logs
+docker stop nexus-quant      # Stop container
+```
+
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `API_PORT` | `8000` | FastAPI server port |
+| `LOG_LEVEL` | `info` | Logging verbosity |
+| `DATA_SOURCE` | `synthetic` | Market data source |
+| `ANOMALY_THRESHOLD` | `2.0` | Z-score threshold for anomalies |
+
+### Local Development
+
+```bash
+pip install -e ".[dev]"
+uvicorn api.main:app --reload --port 8000
 ```
 
 ---
@@ -193,6 +222,8 @@ Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) and op
 
 ## License
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 MIT License — see [LICENSE](LICENSE) for details.
 
 ---
@@ -200,7 +231,3 @@ MIT License — see [LICENSE](LICENSE) for details.
 <div align="center">
 Part of the <a href="https://github.com/Raphasha27">Kirov Dynamics Technology</a> portfolio
 </div>
-
-<!-- 2026-08-31 17:04:25 -->
-
-<!-- trigger-170846 -->
