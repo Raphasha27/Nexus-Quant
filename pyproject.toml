@@ -15,7 +15,7 @@ authors = [
 dependencies = [
     "fastapi>=0.141.1",
     "uvicorn[standard]>=0.52.4",
-    "pydantic>=2.13.4",
+    "pydantic>=2.13.5",
 ]
 keywords = ["quantitative-trading", "market-analytics", "fastapi", "portfolio-optimization", "finance"]
 
@@ -23,6 +23,6 @@ keywords = ["quantitative-trading", "market-analytics", "fastapi", "portfolio-op
 dev = [
     "pytest>=9.1.1",
     "httpx>=0.28.1",
-    "ruff>=0.16.4",
-    "pre-commit>=4.6.1",
+    "ruff>=0.16.5",
+    "pre-commit>=4.6.2",
 ]
