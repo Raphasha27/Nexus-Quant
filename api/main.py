@@ -7,8 +7,34 @@ from typing import Optional, List
 
 app = FastAPI(
     title="Nexus-Quant API",
-    description="Autonomous market anomaly detection and quantitative trading signal engine.",
-    version="2.0.0"
+    description=(
+        "Autonomous market anomaly detection and quantitative trading signal engine.\n\n"
+        "## Features\n"
+        "- **Trading Signals** — Generate BUY/SELL/HOLD signals with technical indicators\n"
+        "- **Anomaly Detection** — Identify volume and price anomalies in OHLCV data\n"
+        "- **OHLCV Data** — Retrieve historical candlestick data for any ticker\n"
+        "- **Portfolio Optimization** — Mean-variance optimization with Sharpe ratio analysis\n"
+        "- **Market Summary** — Sector performance and market sentiment overview\n\n"
+        "## Technical Indicators\n"
+        "Signals are computed using SMA-5, SMA-20 crossovers and RSI momentum analysis."
+    ),
+    version="2.0.0",
+    contact={
+        "name": "Nexus-Quant Support",
+        "url": "https://github.com/Raphasha27/Nexus-Quant",
+    },
+    license_info={
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT",
+    },
+    openapi_tags=[
+        {"name": "Signal", "description": "Trading signal generation with technical indicators"},
+        {"name": "Anomaly", "description": "Market anomaly detection and volume analysis"},
+        {"name": "OHLCV", "description": "Historical candlestick (Open-High-Low-Close-Volume) data"},
+        {"name": "Portfolio", "description": "Portfolio optimization and allocation strategies"},
+        {"name": "Market", "description": "Market summary and sector performance"},
+        {"name": "Health", "description": "Service health checks"},
+    ],
 )
 
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])

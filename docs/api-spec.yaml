@@ -1,0 +1,334 @@
+openapi: 3.0.3
+info:
+  title: Nexus-Quant API
+  description: |
+    Autonomous market anomaly detection and quantitative trading signal engine.
+  version: 2.0.0
+  contact:
+    name: Nexus-Quant Support
+    url: https://github.com/Raphasha27/Nexus-Quant
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+tags:
+  - name: Signal
+    description: Trading signal generation with technical indicators
+  - name: Anomaly
+    description: Market anomaly detection and volume analysis
+  - name: OHLCV
+    description: Historical candlestick (Open-High-Low-Close-Volume) data
+  - name: Portfolio
+    description: Portfolio optimization and allocation strategies
+  - name: Market
+    description: Market summary and sector performance
+  - name: Health
+    description: Service health checks
+
+paths:
+  /:
+    get:
+      tags: [Health]
+      summary: Platform status
+      operationId: rootInfo
+      responses:
+        "200":
+          description: Platform status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ONLINE
+                  platform:
+                    type: string
+                    example: Nexus-Quant
+                  version:
+                    type: string
+                    example: "2.0.0"
+                  modes:
+                    type: array
+                    items:
+                      type: string
+
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      operationId: healthCheck
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: healthy
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /api/v1/signal:
+    post:
+      tags: [Signal]
+      summary: Generate trading signal
+      description: Generate a BUY/SELL/HOLD signal with technical indicators for a given ticker.
+      operationId: generateSignal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignalRequest"
+      responses:
+        "200":
+          description: Trading signal
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticker:
+                    type: string
+                  strategy:
+                    type: string
+                  signal:
+                    type: string
+                    enum: [BUY, SELL, HOLD]
+                  confidence:
+                    type: number
+                  indicators:
+                    type: object
+                    properties:
+                      sma_5:
+                        type: number
+                      sma_20:
+                        type: number
+                      rsi:
+                        type: number
+                  generated_at:
+                    type: string
+                    format: date-time
+
+  /api/v1/anomaly:
+    post:
+      tags: [Anomaly]
+      summary: Detect anomalies
+      description: Identify volume and price anomalies in OHLCV data using z-score analysis.
+      operationId: detectAnomaly
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnomalyRequest"
+      responses:
+        "200":
+          description: Anomaly detection results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticker:
+                    type: string
+                  lookback_days:
+                    type: integer
+                  anomalies_detected:
+                    type: integer
+                  anomalies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                        volume:
+                          type: integer
+                        z_score:
+                          type: number
+                  avg_volume:
+                    type: number
+                  alert:
+                    type: boolean
+
+  /api/v1/ohlcv/{ticker}:
+    get:
+      tags: [OHLCV]
+      summary: Get OHLCV data
+      description: Retrieve historical candlestick data for a given ticker.
+      operationId: getOhlcv
+      parameters:
+        - name: ticker
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Ticker symbol
+          example: NQ-SYNTH
+        - name: days
+          in: query
+          schema:
+            type: integer
+            default: 30
+          description: Number of days of history
+      responses:
+        "200":
+          description: OHLCV data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticker:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/OHLCVBar"
+
+  /api/v1/portfolio/optimize:
+    post:
+      tags: [Portfolio]
+      summary: Optimize portfolio
+      description: Run mean-variance portfolio optimization with allocation recommendations.
+      operationId: optimizePortfolio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortfolioRequest"
+      responses:
+        "200":
+          description: Portfolio optimization results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  strategy:
+                    type: string
+                    example: mean_variance_optimization
+                  total_capital:
+                    type: number
+                  expected_return:
+                    type: number
+                  sharpe_ratio:
+                    type: number
+                  max_drawdown:
+                    type: number
+                  allocations:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        weight:
+                          type: number
+                        capital_usd:
+                          type: number
+
+  /api/v1/market/summary:
+    get:
+      tags: [Market]
+      summary: Market summary
+      description: Overview of market sentiment, VIX, and sector performance.
+      operationId: marketSummary
+      responses:
+        "200":
+          description: Market summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  market_sentiment:
+                    type: string
+                    enum: [Bullish, Bearish, Neutral]
+                  vix:
+                    type: number
+                  sector_performance:
+                    type: object
+                    additionalProperties:
+                      type: number
+
+components:
+  schemas:
+    SignalRequest:
+      type: object
+      properties:
+        ticker:
+          type: string
+          default: NQ-SYNTH
+          description: Ticker symbol to analyze
+        strategy:
+          type: string
+          default: momentum
+          enum: [momentum, mean_reversion, breakout]
+          description: Trading strategy
+        risk_tolerance:
+          type: number
+          default: 0.5
+          minimum: 0
+          maximum: 1
+          description: Risk tolerance (0=conservative, 1=aggressive)
+
+    AnomalyRequest:
+      type: object
+      properties:
+        ticker:
+          type: string
+          default: NQ-SYNTH
+        lookback_days:
+          type: integer
+          default: 30
+          minimum: 7
+          maximum: 365
+
+    PortfolioRequest:
+      type: object
+      properties:
+        tickers:
+          type: array
+          items:
+            type: string
+          default: ["NQ-A", "NQ-B", "NQ-C"]
+          description: List of ticker symbols
+        capital:
+          type: number
+          default: 100000.0
+          description: Total investment capital in USD
+
+    OHLCVBar:
+      type: object
+      properties:
+        date:
+          type: string
+          example: "2025-01-15"
+        open:
+          type: number
+          example: 150.25
+        high:
+          type: number
+          example: 153.80
+        low:
+          type: number
+          example: 148.90
+        close:
+          type: number
+          example: 152.10
+        volume:
+          type: integer
+          example: 2500000
