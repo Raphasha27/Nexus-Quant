@@ -4,8 +4,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import pytest
+from api.main import AnomalyRequest, PortfolioRequest, SignalRequest, generate_ohlcv
 from pydantic import ValidationError
-from api.main import SignalRequest, PortfolioRequest, AnomalyRequest, generate_ohlcv
 
 
 class TestSignalRequest:

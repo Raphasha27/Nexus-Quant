@@ -3,10 +3,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from api.main import generate_ohlcv
-
+from api.main import app, generate_ohlcv
 from fastapi.testclient import TestClient
-from api.main import app
 
 client = TestClient(app)
 

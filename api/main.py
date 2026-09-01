@@ -1,9 +1,9 @@
-from fastapi import FastAPI, HTTPException
+import random
+from datetime import datetime, timedelta
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import random, math
-from datetime import datetime, timedelta
-from typing import Optional, List
 
 app = FastAPI(
     title="Nexus-Quant API",
@@ -61,12 +61,12 @@ app.add_middleware(
 # --- Models ---
 class SignalRequest(BaseModel):
     ticker: str = "NQ-SYNTH"
-    strategy: Optional[str] = "momentum"
-    risk_tolerance: Optional[float] = 0.5
+    strategy: str | None = "momentum"
+    risk_tolerance: float | None = 0.5
 
 
 class PortfolioRequest(BaseModel):
-    tickers: List[str] = ["NQ-A", "NQ-B", "NQ-C"]
+    tickers: list[str] = ["NQ-A", "NQ-B", "NQ-C"]
     capital: float = 100000.0
 
 
