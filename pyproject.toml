@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=84.0.0"]
+requires = ["setuptools>=84.2.1"]
 build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
@@ -13,9 +13,9 @@ authors = [
     {name = "Koketso Raphasha", email = "402106633@my.richfield.ac.za"},
 ]
 dependencies = [
-    "fastapi>=0.141.1",
-    "uvicorn[standard]>=0.53.0",
-    "pydantic>=2.13.5",
+    "fastapi>=0.162.0",
+    "uvicorn[standard]>=0.54.0",
+    "pydantic>=2.14.1",
 ]
 keywords = ["quantitative-trading", "market-analytics", "fastapi", "portfolio-optimization", "finance"]
 
@@ -23,6 +23,6 @@ keywords = ["quantitative-trading", "market-analytics", "fastapi", "portfolio-op
 dev = [
     "pytest>=9.1.1",
     "httpx>=0.28.1",
-    "ruff>=0.16.8",
-    "pre-commit>=4.6.2",
+    "ruff>=0.17.2",
+    "pre-commit>=4.7.0",
 ]
